@@ -1,0 +1,122 @@
+<section class="hero is-info welcome is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Bienvenido al Wishlist!
+      </h1>
+      <h2 class="subtitle">
+        Seleccione un evento y asignese un regalo
+      </h2>
+    </div>
+  </div>
+</section>
+
+<%= if @live_action in [:new_assignment] do %>
+<%= live_modal @socket, WishlistWeb.AssignmentLive.FormComponent,
+    id: @assignment.id || :new,
+    title: @page_title,
+    action: @live_action,
+    assignment: @assignment,
+    return_to: Routes.page_path(@socket, :index) %>
+<% end %>
+
+<div class="container">
+  <div class="section">
+    <div class="columns">
+      <div class="column is-3">
+        <section class="info-tiles">
+          <div class="tile is-ancestor has-text-centered">
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <form phx-change="suggest" phx-submit="search">
+                  <div class="field">
+                    <label id="event_id" class="label">Eventos</label>
+                    <div class="control">
+                      <div class="select is-fullwidth"">
+                        <select for="event_id" name="event[event_id]" id="gift-form_event_id">
+                          <option disabled selected value> -- select an option -- </option>
+                          <%= for event <- @events do %>
+                            <option value="<%= event.id %>"><%= event.name %></option>
+                          <% end %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="column is-9">
+        <h1 class="title">
+          Regalos
+        </h1>
+        <div id="app" class="row columns is-multiline">
+          <%= for gift <- @gifts do %>
+            <div class="column is-4">
+              <div class="card large">
+                <div class="card-image">
+                  <figure class="image is-16by9">
+                    <img src="<%= gift.image %>" alt="Image">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4 no-padding"><%= gift.name %></p>
+                      <p><span class="title is-6">$ <%= gift.price %> </span></p>
+                      <p>
+                        <span>
+                          <%= live_patch "Asignarmelo", to: Routes.page_path(@socket, :new_assignment) %>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <%= gift.description %>
+                      <p class="subtitle is-6"><a href="<%= gift.link %>" target="_blank"> ir a comprar </a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+    <ul>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
+      </li>
+    </ul>
+  </article>
+  <article class="column">
+    <h2>Help</h2>
+    <ul>
+      <li>
+        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+      </li>
+      <li>
+        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
+      </li>
+      <li>
+        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
+      </li>
+      <li>
+        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
+      </li>
+    </ul>
+  </article>
+</section-->

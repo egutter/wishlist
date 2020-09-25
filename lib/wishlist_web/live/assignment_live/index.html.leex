@@ -1,0 +1,83 @@
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, WishlistWeb.AssignmentLive.FormComponent,
+    id: @assignment.id || :new,
+    title: @page_title,
+    action: @live_action,
+    assignment: @assignment,
+    event_id: @event_id,
+    return_to: Routes.assignment_index_path(@socket, :index) %>
+<% end %>
+
+<div class="container">
+  <div class="section">
+    <div class="columns">
+      <div class="column is-3">
+        <section class="info-tiles">
+          <div class="tile is-ancestor has-text-centered">
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <%= f = form_for @event, "#",
+                    id: "event-form",
+                    phx_change: "pick_event",
+                    phx_submit: "search" %>
+                  <div class="field">
+                    <%= label f, :event, "Eventos", class: 'label' %>
+                    <div class="control">
+                      <div class="">
+                        <%= select f, :id, Enum.map(@events, &{Wishlist.Wishlists.Event.pretty_name(&1), &1.id}), prompt: 'Elija un evento' %>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="column is-9">
+        <h1 class="title">
+          Regalos
+        </h1>
+        <div id="app" class="row columns is-multiline">
+          <%= for gift <- @gifts do %>
+            <div class="column is-4">
+              <div class="card large">
+                <div class="card-image">
+                  <figure class="image is-fullwidth">
+                    <img src="<%= gift.image %>" alt="Image">
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4 no-padding"><%= gift.name %></p>
+                      <%= if gift_assigned?(gift) do %>
+                        <div class="notification is-warning">
+                          <span>Lo regala: <strong><%= gift.assignment.buyer %></strong></span>
+                          <br/><span><a href="<%= gift.link %>" target="_blank"> Quiero ir a comprarlo</a></span>
+                        </div>
+                      <% end %>
+                      <p><%= gift.description %></p>
+                      <p>Precio: <span class="title is-6"> <%= number_to_currency gift.price %> </span></p>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <p>
+                      <%= unless gift_assigned?(gift) do %>
+                        <span><%= live_patch "¡Lo quiero regalar!", to: Routes.assignment_index_path(@socket, :new, gift_id: gift.id), class: "button is-small is-primary" %></span>
+                      <% else %>
+                        <p class="subtitle is-6">
+                          <span><%= link "Cambie de idea", to: "#", phx_click: "delete", phx_value_id: gift.assignment.id, data: [confirm: "Estas seguro/a?"], class: "button is-small is-danger" %></span>
+                        </p>
+                      <% end %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

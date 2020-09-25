@@ -1,0 +1,23 @@
+<%= f = form_for @changeset, "#",
+  id: "assignment-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <div class="field">
+    <label for="buyer" class="label">Escribí tu nombre</label>
+    <div class="control">
+      <%= text_input f, :buyer, class: 'input' %>
+    </div>
+    <br/>
+    <p class="help is-danger">
+      <%= error_tag f, :buyer %>
+    </p>
+  </div>
+
+  <%= hidden_input f, :gift_id %>
+
+  <%= submit "Guardar", phx_disable_with: "Saving...", class: 'button is-link' %>
+  &nbsp;
+  <%= live_patch "Cancelar", to: Routes.assignment_index_path(@socket, :index, event_id:  @event_id) %>
+</form>

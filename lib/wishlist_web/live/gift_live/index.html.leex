@@ -1,0 +1,48 @@
+<header class="card-header">
+  <p class="card-header-title">
+    Regalos
+  </p>
+</header>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, WishlistWeb.GiftLive.FormComponent,
+    id: @gift.id || :new,
+    title: @page_title,
+    action: @live_action,
+    gift: @gift,
+    events: @events,
+    return_to: Routes.gift_index_path(@socket, :index) %>
+<% end %>
+
+<div class="card-table">
+  <div class="content">
+    <table class="table is-fullwidth is-striped">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Link</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="gifts">
+        <%= for gift <- @gifts do %>
+          <tr id="gift-<%= gift.id %>">
+            <td><%= Wishlist.Wishlists.Event.pretty_name(gift.event) %></td>
+            <td><%= gift.name %></td>
+            <td><%= number_to_currency gift.price %></td>
+
+            <td>
+              <span><%= live_redirect "Show", to: Routes.gift_show_path(@socket, :show, gift), class: "button is-small is-primary" %></span>
+              <span><%= live_patch "Edit", to: Routes.gift_index_path(@socket, :edit, gift), class: "button is-small is-secondary" %></span>
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: gift.id, class: "button is-small is-danger",  data: [confirm: "Are you sure?"] %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<span><%= live_patch "New Gift", to: Routes.gift_index_path(@socket, :new), class: "button is-link" %></span>

@@ -1,0 +1,45 @@
+<header class="card-header">
+  <p class="card-header-title">
+    Eventos
+  </p>
+</header>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, WishlistWeb.EventLive.FormComponent,
+    id: @event.id || :new,
+    title: @page_title,
+    action: @live_action,
+    event: @event,
+    return_to: Routes.event_index_path(@socket, :index) %>
+<% end %>
+
+<div class="card-table">
+  <div class="content">
+    <table class="table is-fullwidth is-striped">
+
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Event date</th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="events">
+        <%= for event <- @events do %>
+          <tr id="event-<%= event.id %>">
+            <td><%= event.name %></td>
+            <td><%= event.event_date %></td>
+
+            <td>
+              <span><%= live_redirect "Show", to: Routes.event_show_path(@socket, :show, event), class: "button is-small is-primary" %></span>
+              <span><%= live_patch "Edit", to: Routes.event_index_path(@socket, :edit, event), class: "button is-small is-secondary" %></span>
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: event.id, class: "button is-small is-danger", data: [confirm: "Are you sure?"] %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<span><%= live_patch "New Event", to: Routes.event_index_path(@socket, :new), class: "button is-link" %></span>

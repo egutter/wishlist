@@ -1,0 +1,22 @@
+<h1>Show Assignment</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, WishlistWeb.AssignmentLive.FormComponent,
+    id: @assignment.id,
+    title: @page_title,
+    action: @live_action,
+    assignment: @assignment,
+    return_to: Routes.assignment_show_path(@socket, :show, @assignment) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Buyer:</strong>
+    <%= @assignment.buyer %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.assignment_show_path(@socket, :edit, @assignment), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.assignment_index_path(@socket, :index) %></span>

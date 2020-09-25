@@ -1,0 +1,48 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "gift-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <div class="field">
+    <%= label f, :event_id, class: 'label' %>
+    <div class="control">
+      <div class="select">
+        <%= select f, :event_id, Enum.map(@events, &{Wishlist.Wishlists.Event.pretty_name(&1), &1.id}) %>
+        <%= error_tag f, :event_id %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <%= label f, :name, class: 'label' %>
+    <%= text_input f, :name, class: 'control' %>
+    <%= error_tag f, :name %>
+  </div>
+  <div class="field">
+    <%= label f, :description, class: 'label' %>
+    <%= textarea f, :description, class: 'control' %>
+    <%= error_tag f, :description %>
+  </div>
+
+  <div class="field">
+    <%= label f, :price, class: 'label' %>
+    <%= number_input f, :price, step: "any", class: 'control' %>
+    <%= error_tag f, :price %>
+  </div>
+
+  <div class="field">
+    <%= label f, :image, class: 'label' %>
+    <%= text_input f, :image, class: 'control' %>
+    <%= error_tag f, :image %>
+  </div>
+
+  <div class="field">
+    <%= label f, :link, class: 'label' %>
+    <%= text_input f, :link, class: 'control' %>
+    <%= error_tag f, :link %>
+  </div>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>
