@@ -23,7 +23,7 @@
                   <div class="field">
                     <%= label f, :event, "Eventos", class: 'label' %>
                     <div class="control">
-                      <div class="">
+                      <div class="select">
                         <%= select f, :id, Enum.map(@events, &{Wishlist.Wishlists.Event.pretty_name(&1), &1.id}), prompt: 'Elija un evento' %>
                       </div>
                     </div>
@@ -54,20 +54,22 @@
                       <%= if gift_assigned?(gift) do %>
                         <div class="notification is-warning">
                           <span>Lo regala: <strong><%= gift.assignment.buyer %></strong></span>
-                          <br/><span><a href="<%= gift.link %>" target="_blank"> Quiero ir a comprarlo</a></span>
+                          <br/><span>Comprarlo en <a href="<%= gift.link %>" target="_blank">MercadoLibre</a></span>
                         </div>
                       <% end %>
                       <p><%= gift.description %></p>
+                      <br />
                       <p>Precio: <span class="title is-6"> <%= number_to_currency gift.price %> </span></p>
+                      <p>Ver en <span class="title is-6"> <a href="<%= gift.link %>" target="_blank"> MercadoLibre</a> </span></p>
                     </div>
                   </div>
                   <div class="content">
                     <p>
                       <%= unless gift_assigned?(gift) do %>
-                        <span><%= live_patch "¡Lo quiero regalar!", to: Routes.assignment_index_path(@socket, :new, gift_id: gift.id), class: "button is-small is-primary" %></span>
+                        <span><%= live_patch "¡Lo quiero regalar!", to: Routes.assignment_index_path(@socket, :new, gift_id: gift.id), class: "button is-primary" %></span>
                       <% else %>
                         <p class="subtitle is-6">
-                          <span><%= link "Cambie de idea", to: "#", phx_click: "delete", phx_value_id: gift.assignment.id, data: [confirm: "Estas seguro/a?"], class: "button is-small is-danger" %></span>
+                          <span><%= link "Cambie de idea", to: "#", phx_click: "delete", phx_value_id: gift.assignment.id, data: [confirm: "Estas seguro/a?"], class: "button is-danger" %></span>
                         </p>
                       <% end %>
                     </p>
