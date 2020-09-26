@@ -2,6 +2,8 @@ defmodule WishlistWeb.GiftLive.FormComponent do
   use WishlistWeb, :live_component
 
   alias Wishlist.Wishlists
+  alias Phoenix.PubSub
+  alias Wishlist.Wishlists.Assignment
 
   @impl true
   def update(%{gift: gift} = assigns, socket) do
@@ -29,7 +31,10 @@ defmodule WishlistWeb.GiftLive.FormComponent do
 
   defp save_gift(socket, :edit, gift_params) do
     case Wishlists.update_gift(socket.assigns.gift, gift_params) do
-      {:ok, _gift} ->
+      {:ok, gift} ->
+
+        PubSub.broadcast(Wishlist.PubSub, Assignment.topic(), {:assignament, gift.event_id})
+
         {:noreply,
          socket
          |> put_flash(:info, "Gift updated successfully")
@@ -42,7 +47,10 @@ defmodule WishlistWeb.GiftLive.FormComponent do
 
   defp save_gift(socket, :new, gift_params) do
     case Wishlists.create_gift(gift_params) do
-      {:ok, _gift} ->
+      {:ok, gift} ->
+
+        PubSub.broadcast(Wishlist.PubSub, Assignment.topic(), {:assignament, gift.event_id})
+
         {:noreply,
          socket
          |> put_flash(:info, "Gift created successfully")

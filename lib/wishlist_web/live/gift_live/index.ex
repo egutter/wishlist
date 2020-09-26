@@ -3,6 +3,8 @@ defmodule WishlistWeb.GiftLive.Index do
 
   alias Wishlist.Wishlists
   alias Wishlist.Wishlists.Gift
+  alias Phoenix.PubSub
+  alias Wishlist.Wishlists.Assignment
 
   @impl true
   def mount(_params, _session, socket) do
@@ -42,6 +44,8 @@ defmodule WishlistWeb.GiftLive.Index do
   def handle_event("delete", %{"id" => id}, socket) do
     gift = Wishlists.get_gift!(id)
     {:ok, _} = Wishlists.delete_gift(gift)
+
+    PubSub.broadcast(Wishlist.PubSub, Assignment.topic(), {:assignament, gift.event_id})
 
     {:noreply, assign(socket, :gifts, list_gifts())}
   end
