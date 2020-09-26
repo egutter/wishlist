@@ -11,8 +11,6 @@ use Mix.Config
 # before starting your production server.
 config :wishlist, WishlistWeb.Endpoint,
   url: [host: "wishlist.gigalixirapp.com", port: 443],
-  # Without this line, your app will not start the web server!
-  server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -47,8 +45,8 @@ config :logger, level: :info
 # We also recommend setting `force_ssl` in your endpoint, ensuring
 # no data is ever sent via http, always redirecting to https:
 #
-config :wishlist, WishlistWeb.Endpoint,
- force_ssl: [rewrite_on: [:x_forwarded_proto], exclude: ["localhost", System.get_env("IP_ADDRESS")]]
+#config :wishlist, WishlistWeb.Endpoint,
+# force_ssl: [rewrite_on: [:x_forwarded_proto], exclude: ["localhost", System.get_env("IP_ADDRESS")]]
 
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
