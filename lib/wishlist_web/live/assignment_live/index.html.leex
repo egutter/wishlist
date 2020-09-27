@@ -8,8 +8,11 @@
     return_to: Routes.assignment_index_path(@socket, :index) %>
 <% end %>
 
+
 <div class="container">
   <div class="section">
+    <h1 class="title is-3">Bienvenido al Wishlist!</h1>
+    <h1 class="subtitle">Seleccione un evento y elija un regalo</h1>
     <div class="columns">
       <div class="column is-3">
         <section class="info-tiles">
@@ -35,9 +38,6 @@
         </section>
       </div>
       <div class="column is-9">
-        <h1 class="title">
-          Regalos
-        </h1>
         <div id="app" class="row columns is-multiline">
           <%= for gift <- @gifts do %>
             <div class="column is-4">

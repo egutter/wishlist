@@ -1,19 +1,19 @@
 <nav class="level">
-    <div class="level-item has-text-centered">
-        <div>
-            <p class="title"><%= link "Eventos", to: Routes.event_index_path(@conn, :index) %></p>
-        </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-            <p class="title"><%= link "Regalos", to: Routes.gift_index_path(@conn, :index) %></p>
-        </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-            <p class="title"><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></p>
-            <% end %>
-        </div>
-    </div>
+  <div class="level-item has-text-centered">
+      <div>
+          <p class="title"><%= link "Eventos", to: Routes.event_index_path(@conn, :index) %></p>
+      </div>
+  </div>
+  <div class="level-item has-text-centered">
+      <div>
+          <p class="title"><%= link "Regalos", to: Routes.gift_index_path(@conn, :index) %></p>
+      </div>
+  </div>
+  <div class="level-item has-text-centered">
+      <div>
+          <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+          <p class="title"><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></p>
+          <% end %>
+      </div>
+  </div>
 </nav>

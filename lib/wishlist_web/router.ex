@@ -17,6 +17,11 @@ defmodule WishlistWeb.Router do
 
   pipeline :admin do
     plug :basic_auth, Application.compile_env(:wishlist, :basic_auth)
+    plug :set_layout, template: {WishlistWeb.LayoutView, "admin.html"}
+  end
+
+  defp set_layout(conn, opts) do
+    conn |> put_root_layout(opts[:template])
   end
 
   scope "/admin", WishlistWeb do

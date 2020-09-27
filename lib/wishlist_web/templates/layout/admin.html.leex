@@ -45,6 +45,33 @@
         </div>
       </section>
     </header>
-    <%= @inner_content %>
+    <div class="container">
+      <div class="section">
+        <div class="columns">
+          <div class="column is-3">
+            <aside class="menu">
+              <p class="menu-label">
+                Administration
+              </p>
+              <ul class="menu-list">
+                <li><%= link "Eventos", to: Routes.event_index_path(@conn, :index) %></li>
+                <li><%= link "Regalos", to: Routes.gift_index_path(@conn, :index) %></li>
+              </ul>
+              <p class="menu-label">
+                Extra
+              </p>
+              <ul class="menu-list">
+                <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+                <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+                <% end %>
+              </ul>
+            </aside>
+          </div>
+          <div class="column is-9">
+            <%= @inner_content %>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
