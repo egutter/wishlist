@@ -6,6 +6,7 @@
     title: @page_title,
     action: @live_action,
     gift: @gift,
+    events: @events,
     return_to: Routes.gift_show_path(@socket, :show, @gift) %>
 <% end %>
 
@@ -23,19 +24,29 @@
 
   <li>
     <strong>Price:</strong>
-    $ <%= @gift.price %>
+    <%= number_to_currency @gift.price %>
   </li>
 
   <li>
-    <img src="<%= @gift.image %>" height="200" />
+    <strong>Link 1:</strong>
+    <%= @gift.link %>
   </li>
 
   <li>
-    <strong>Ver en:</strong>
-    <a target="_blank" href="<%= @gift.link %>">Mercado Libre</a>
+    <strong>Link 2:</strong>
+    <%= @gift.link_2 %>
+  </li>
+
+  <li>
+    <strong>Link 3:</strong>
+    <%= @gift.link_3 %>
+  </li>
+
+  <li>
+    <img src="<%= @gift.image %>" width="200" />
   </li>
 
 </ul>
 
-<span><%= live_patch "Edit", to: Routes.gift_show_path(@socket, :edit, @gift), class: "button" %></span>
+<span><%= live_patch "Edit", to: Routes.gift_show_path(@socket, :edit, @gift),  class: 'button is-link' %></span>
 <span><%= live_redirect "Back", to: Routes.gift_index_path(@socket, :index) %></span>

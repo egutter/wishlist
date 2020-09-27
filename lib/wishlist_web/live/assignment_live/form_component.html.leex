@@ -17,7 +17,7 @@
 
   <%= hidden_input f, :gift_id %>
 
-  <%= submit "Guardar", phx_disable_with: "Saving...", class: 'button is-link' %>
+  <%= submit "Guardar", phx_disable_with: "Guardando...", class: 'button is-link' %>
   &nbsp;
   <%= live_patch "Cancelar", to: Routes.assignment_index_path(@socket, :index, event_id:  @event_id), class: 'button is-danger' %>
 </form>

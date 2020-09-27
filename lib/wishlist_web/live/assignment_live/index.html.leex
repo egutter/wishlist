@@ -54,13 +54,14 @@
                       <%= if gift_assigned?(gift) do %>
                         <div class="notification is-warning">
                           <span>Lo regala: <strong><%= gift.assignment.buyer %></strong></span>
-                          <br/><span>Comprarlo en <a href="<%= gift.link %>" target="_blank">MercadoLibre</a></span>
                         </div>
                       <% end %>
                       <p><%= gift.description %></p>
                       <br />
-                      <p>Precio: <span class="title is-6"> <%= number_to_currency gift.price %> </span></p>
-                      <p>Ver en <span class="title is-6"> <a href="<%= gift.link %>" target="_blank"> MercadoLibre</a> </span></p>
+                      <p>Precio aprox: <span class="title is-6"> <%= number_to_currency gift.price %> </span></p>
+                      <p><%= shop_link_sites_header(gift.link) %>
+                        <%= shop_link_sites(gift.link, 1, '') %> <%= shop_link_sites(gift.link_2, 2, ',') %> <%= shop_link_sites(gift.link_3, 3, ',') %> </p>
+
                     </div>
                   </div>
                   <div class="content">

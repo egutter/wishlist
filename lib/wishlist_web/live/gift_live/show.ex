@@ -13,7 +13,8 @@ defmodule WishlistWeb.GiftLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:gift, Wishlists.get_gift!(id))}
+     |> assign(:gift, Wishlists.get_gift!(id))
+     |> assign(:events, Wishlists.list_events())}
   end
 
   defp page_title(:show), do: "Show Gift"

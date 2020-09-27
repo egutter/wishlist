@@ -2,6 +2,8 @@ defmodule WishlistWeb.LiveHelpers do
   import Phoenix.LiveView.Helpers
   alias Number.Currency
   alias Wishlist.Wishlists.Gift
+  alias Phoenix.HTML.Tag
+  import Phoenix.HTML
 
   @doc """
   Renders a component inside the `WishlistWeb.ModalComponent` component.
@@ -30,4 +32,26 @@ defmodule WishlistWeb.LiveHelpers do
   def number_to_currency(number) do
     Currency.number_to_currency(number)
   end
+
+  def shop_link_sites_header(nil) do
+    ""
+  end
+
+  def shop_link_sites_header(link) do
+    ~E"""
+    Opciones para comprar el regalo:
+    <br />
+    """
+  end
+
+  def shop_link_sites(nil, _number, _prefix) do
+    ""
+  end
+
+  def shop_link_sites(link, number, prefix) do
+    ~E"""
+    <%= prefix %> <%= Tag.content_tag(:a, "Opción #{number}", target: "_blank", href: link) %>
+    """
+  end
+
 end

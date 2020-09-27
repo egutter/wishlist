@@ -7,6 +7,8 @@ defmodule Wishlist.Wishlists.Gift do
   schema "gifts" do
     field :image, :string
     field :link, :string
+    field :link_2, :string
+    field :link_3, :string
     field :name, :string
     field :description, :string
     field :price, :decimal
@@ -19,8 +21,8 @@ defmodule Wishlist.Wishlists.Gift do
   @doc false
   def changeset(gift, attrs) do
     gift
-    |> cast(attrs, [:name, :price, :image, :link, :description, :event_id])
-    |> validate_required([:name, :price, :image, :link, :description, :event_id])
+    |> cast(attrs, [:name, :price, :image, :link, :link_2, :link_3, :description, :event_id])
+    |> validate_required([:name, :price, :image, :description, :event_id])
   end
 
   def assigned?(a_gift) do
